@@ -18,5 +18,12 @@
     "execa": "^9.5.2",
     "fs-extra": "^11.3.0",
     "prompts": "^2.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megh-bari/vite-tailwind-starter"
+  },
+  "bugs": {
+    "url": "https://github.com/megh-bari/vite-tailwind-starter/issues"
   }
 }
