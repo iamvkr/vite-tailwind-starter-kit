@@ -1,6 +1,6 @@
-# Vite Tailwind Starter
+# Vite Tailwind Starter Kit
 
-Vite Tailwind Starter is a CLI tool that quickly sets up a Vite + React + Tailwind CSS project with just one command. It automates the installation of dependencies, configures Tailwind CSS, and updates the necessary files.
+Vite Tailwind Starter Kit is a CLI tool that quickly sets up a Vite + React + Tailwind CSS project with just one command. It automates the installation of dependencies, configures Tailwind CSS, and updates the necessary files.
 
 ## Features
 
@@ -15,7 +15,7 @@ Vite Tailwind Starter is a CLI tool that quickly sets up a Vite + React + Tailwi
 To install the CLI globally, run:
 
 ```sh
-npm install -g vite-tailwind-starter
+npm i vite-tailwind-starter-kit
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ npm install -g vite-tailwind-starter
 Create a new Vite + Tailwind project using:
 
 ```sh
-vite-tailwind my-project
+vite-tailwind
 ```
 
 This will:
