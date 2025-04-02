@@ -1,5 +1,5 @@
 {
-  "name": "vite-tailwind-starter",
+  "name": "vite-tailwind-starter-kit",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -21,9 +21,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/megh-bari/vite-tailwind-starter"
+    "url": "git+https://github.com/megh-bari/vite-tailwind-starter-kit"
   },
   "bugs": {
-    "url": "https://github.com/megh-bari/vite-tailwind-starter/issues"
+    "url": "https://github.com/megh-bari/vite-tailwind-starter-kit/issues"
   }
 }
