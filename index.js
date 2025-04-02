@@ -71,29 +71,32 @@ export default defineConfig({
     `function App() {
   return (
     <>
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white">
-        <h1 className="text-3xl mb-10">Ab toh hogi na coding??</h1>
-        <p className="mb-2 inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300 shadow-md">
-          Made by{" "}
-          <span className="font-bold">
-            {" "}
-            <a
-              href="https://x.com/megh_bari"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex cursor-pointer"
-            >
-              Megh Bari
-            </a>
-          </span>
-        </p>
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-6">
+        <h1 className="text-4xl font-bold mb-6">
+          🚀 Welcome to Vite + Tailwind!
+        </h1>
+        <div className="flex justify-center">
+          <p className="text-lg text-gray-300 mb-4 text-center">
+            This setup was automatically generated. <br />
+            <span className="font-bold text-amber-400">Ab toh hogi na coding??</span>
+          </p>
+        </div>
+
+        <a
+          href="https://x.com/megh_bari"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-2 inline-flex items-center gap-2 px-4 cursor-pointer py-2 rounded-md bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300 shadow-md"
+        >
+          Follow Megh Bari
+        </a>
       </div>
     </>
   );
 }
 
 export default App;
-;
+
 `
   );
   console.log(
