@@ -4,15 +4,32 @@ import fs from "fs-extra";
 import chalk from "chalk";
 import path from "path";
 import prompts from "prompts";
-import { index_css_template, vite_config_template, app_component_template } from "./template.js";
+import open from "open";
+import {
+  index_css_template,
+  vite_config_template,
+  app_component_template,
+} from "./template.js";
 
 async function createProject() {
-  const projectResponse = await prompts([
+  const response = await prompts([
     {
       type: "text",
       name: "projectName",
       message: "Enter your project name",
-      initial: "vite-tailwind-v4-app",
+      initial: ".",
+    },
+    {
+      type: "select",
+      name: "pkgManager",
+      message: "Choose a package manager",
+      choices: [
+        { title: "npm", value: "npm" },
+        { title: "pnpm", value: "pnpm" },
+        { title: "yarn", value: "yarn" },
+        { title: "bun", value: "bun" },
+      ],
+      initial: 0,
     },
     {
       type: "confirm",
@@ -25,77 +42,87 @@ async function createProject() {
       name: "isIcon",
       message: "Do you want to install lucide-react icons?",
       initial: true,
-    }
+    },
+    {
+      type: "confirm",
+      name: "openBrowser",
+      message: "Open project in browser after starting?",
+      initial: true,
+    },
   ]);
 
-  const { projectName, isRouter, isIcon } = projectResponse;
-  const projectPath = path.join(process.cwd(), projectName);
+  const { projectName, pkgManager, isRouter, isIcon, openBrowser } = response;
+  const inPlace = projectName === ".";
+
+  const appName = inPlace ? path.basename(process.cwd()) : projectName;
+  const projectPath = inPlace ? process.cwd() : path.join(process.cwd(), projectName);
 
   console.log(
     chalk.green(
-      `\nCreating a new Vite + Tailwind CSS v4 ${isRouter && `+ react-router-dom`} ${isIcon && `+ lucide-react icons`} 
-      project: ${projectName}...`
+      `\nCreating Vite + Tailwind${isRouter ? " + React Router" : ""}${
+        isIcon ? " + Lucide Icons" : ""
+      } project: ${appName}...\n`
     )
   );
 
-  await execa(
-    "npm",
-    ["create", `vite@latest`, projectName, "--", "--template", "react"],
-    { stdio: "inherit" }
-  );
+  if (!inPlace) {
+    const createCmd =
+      pkgManager === "bun"
+        ? ["create", "vite", appName, "--", "--template", "react"]
+        : ["create", "vite@latest", appName, "--", "--template", "react"];
+    await execa(pkgManager, createCmd, { stdio: "inherit" });
+    process.chdir(projectPath);
+  } else {
+    const createCmd =
+      pkgManager === "bun"
+        ? ["create", "vite", ".", "--", "--template", "react"]
+        : ["create", "vite@latest", ".", "--", "--template", "react"];
+    await execa(pkgManager, createCmd, { stdio: "inherit" });
+  }
 
-  // this is change directory
-  process.chdir(projectPath);
+  const installCmd =
+    pkgManager === "yarn" || pkgManager === "pnpm" || pkgManager === "bun"
+      ? "add"
+      : "install";
 
-  console.log(chalk.blue("\nInstalling Tailwind CSS v4 with Vite plugin...\n"));
+  const deps = ["tailwindcss", "@tailwindcss/vite"];
+  if (isRouter) deps.push("react-router-dom");
+  if (isIcon) deps.push("lucide-react");
 
-  const commandArr = ["install", "tailwindcss", "@tailwindcss/vite"];
-  if (isRouter) commandArr.push("react-router-dom");
-  if (isIcon) commandArr.push("lucide-react");
-  // Install tailwindcss
-  await execa(
-    "npm",
-    commandArr,
-    { stdio: "inherit" }
-  );
+  console.log(chalk.blue("\nInstalling dependencies...\n"));
+  await execa(pkgManager, [installCmd, ...deps], { stdio: "inherit" });
 
-  console.log(chalk.green("\nConfiguring Vite for Tailwind CSS v4...\n"));
+  // Vite config
+  fs.writeFileSync(path.join(projectPath, "vite.config.js"), vite_config_template);
 
-  // modify vite.config.js
-  const viteConfigPath = path.join(projectPath, "vite.config.js");
+  // Tailwind CSS entry
+  fs.writeFileSync(path.join(projectPath, "src/index.css"), index_css_template);
+
+  // App.jsx
   fs.writeFileSync(
-    viteConfigPath,
-    vite_config_template
+    path.join(projectPath, "src/App.jsx"),
+    app_component_template(isRouter, isIcon)
   );
 
-  // Create a simple CSS file with Tailwind import
-  const cssPath = path.join(projectPath, "src/index.css");
+  // .gitignore
   fs.writeFileSync(
-    cssPath,
-    index_css_template
+    path.join(projectPath, ".gitignore"),
+    `node_modules\ndist\n.env\n.DS_Store`
   );
 
-  // Create a simple App Component file
-  const AppPath = path.join(projectPath, "src/App.jsx");
-  const template = app_component_template(isRouter, isIcon);
-
-  fs.writeFileSync(
-    AppPath,
-    template
-  );
+  console.log(chalk.green("\n✅ Setup complete! Run the following:\n"));
+  if (!inPlace) console.log(chalk.cyan(`cd ${projectName}`));
   console.log(
-    chalk.green(
-      "\nTailwind CSS v4 with Vite plugin setup complete! Run the following commands to start your project:\n"
+    chalk.cyan(
+      `${pkgManager === "yarn" ? "yarn dev" : pkgManager === "bun" ? "bun dev" : pkgManager + " run dev"}\n`
     )
   );
 
-  console.log(chalk.cyan(`cd ${projectName}`));
-  console.log(chalk.cyan("npm run dev\n"));
-  console.log(
-    chalk.yellow(
-      "Note: Make sure your components import the CSS file to use Tailwind styles."
-    )
-  );
+  if (openBrowser) {
+    setTimeout(() => {
+      open("http://localhost:5173");
+    }, 2000);
+  }
 }
 
 createProject().catch((err) => console.error(chalk.red(err)));

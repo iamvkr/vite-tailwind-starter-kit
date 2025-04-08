@@ -73,9 +73,19 @@ const App = () => {
             </div>
         </>)
     }
-    const About = () => {
-        return (<div className='min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-6 text-2xl'>About page</div>)
-    }
+   const About = () => {
+    return (
+        <div className='min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-6 text-2xl'>
+            <h2 className="mb-4">About Page</h2>
+            <Link
+                to="/"
+                className="text-lg underline text-amber-400 hover:text-amber-300 transition"
+            >
+                ← Back to Home
+            </Link>
+        </div>
+    )
+}
     const NotFound = () => {
         return (<div>404 error</div>)
     }
