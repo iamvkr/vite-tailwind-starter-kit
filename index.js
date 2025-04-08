@@ -4,21 +4,37 @@ import fs from "fs-extra";
 import chalk from "chalk";
 import path from "path";
 import prompts from "prompts";
+import { index_css_template, vite_config_template, app_component_template } from "./template.js";
 
 async function createProject() {
-  const response = await prompts({
-    type: "text",
-    name: "projectName",
-    message: "Enter your project name",
-    initial: "vite-tailwind-v4-app",
-  });
+  const projectResponse = await prompts([
+    {
+      type: "text",
+      name: "projectName",
+      message: "Enter your project name",
+      initial: "vite-tailwind-v4-app",
+    },
+    {
+      type: "confirm",
+      name: "isRouter",
+      message: "Do you want to install react-router-dom?",
+      initial: true,
+    },
+    {
+      type: "confirm",
+      name: "isIcon",
+      message: "Do you want to install lucide-react icons?",
+      initial: true,
+    }
+  ]);
 
-  const projectName = response.projectName.trim();
+  const { projectName, isRouter, isIcon } = projectResponse;
   const projectPath = path.join(process.cwd(), projectName);
 
   console.log(
     chalk.green(
-      `\nCreating a new Vite + Tailwind CSS v4 project: ${projectName}...\n`
+      `\nCreating a new Vite + Tailwind CSS v4 ${isRouter && `+ react-router-dom`} ${isIcon && `+ lucide-react icons`} 
+      project: ${projectName}...`
     )
   );
 
@@ -33,10 +49,15 @@ async function createProject() {
 
   console.log(chalk.blue("\nInstalling Tailwind CSS v4 with Vite plugin...\n"));
 
+  const commandArr = ["install", "tailwindcss", "@tailwindcss/vite"];
+  if (isRouter) commandArr.push("react-router-dom");
+  if (isIcon) commandArr.push("lucide-react");
   // Install tailwindcss
-  await execa("npm", ["install", "tailwindcss", "@tailwindcss/vite"], {
-    stdio: "inherit",
-  });
+  await execa(
+    "npm",
+    commandArr,
+    { stdio: "inherit" }
+  );
 
   console.log(chalk.green("\nConfiguring Vite for Tailwind CSS v4...\n"));
 
@@ -44,60 +65,23 @@ async function createProject() {
   const viteConfigPath = path.join(projectPath, "vite.config.js");
   fs.writeFileSync(
     viteConfigPath,
-    `import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(),tailwindcss(),],
-})
-
-`
+    vite_config_template
   );
 
   // Create a simple CSS file with Tailwind import
   const cssPath = path.join(projectPath, "src/index.css");
   fs.writeFileSync(
     cssPath,
-    `@import "tailwindcss";
-`
+    index_css_template
   );
 
   // Create a simple App Component file
   const AppPath = path.join(projectPath, "src/App.jsx");
+  const template = app_component_template(isRouter, isIcon);
+
   fs.writeFileSync(
     AppPath,
-    `function App() {
-  return (
-    <>
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-6">
-        <h1 className="text-4xl font-bold mb-6">
-          🚀 Welcome to Vite + Tailwind!
-        </h1>
-        <div className="flex justify-center">
-          <p className="text-lg text-gray-300 mb-4 text-center">
-            This setup was automatically generated. <br />
-            <span className="font-bold text-amber-400">Ab toh hogi na coding??</span>
-          </p>
-        </div>
-
-        <a
-          href="https://x.com/megh_bari"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mb-2 inline-flex items-center gap-2 px-4 cursor-pointer py-2 rounded-md bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300 shadow-md"
-        >
-          Follow Megh Bari
-        </a>
-      </div>
-    </>
-  );
-}
-
-export default App;
-
-`
+    template
   );
   console.log(
     chalk.green(
