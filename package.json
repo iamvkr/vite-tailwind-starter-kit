@@ -1,6 +1,6 @@
 {
   "name": "vite-tailwind-starter-kit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,10 +9,17 @@
   "bin": {
     "vite-tailwind": "index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "vite",
+    "tailwind",
+    "starter",
+    "cli",
+    "lucide",
+    "routing"
+  ],
+  "author": "Megh Bari",
   "license": "ISC",
-  "description": "",
+  "description": "A starter CLI to scaffold a Vite + Tailwind project with routing and Lucide icons",
   "dependencies": {
     "chalk": "^5.4.1",
     "execa": "^9.5.2",
