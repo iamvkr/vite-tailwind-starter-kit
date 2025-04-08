@@ -55,7 +55,9 @@ async function createProject() {
   const inPlace = projectName === ".";
 
   const appName = inPlace ? path.basename(process.cwd()) : projectName;
-  const projectPath = inPlace ? process.cwd() : path.join(process.cwd(), projectName);
+  const projectPath = inPlace
+    ? process.cwd()
+    : path.join(process.cwd(), projectName);
 
   console.log(
     chalk.green(
@@ -90,10 +92,18 @@ async function createProject() {
   if (isIcon) deps.push("lucide-react");
 
   console.log(chalk.blue("\nInstalling dependencies...\n"));
-  await execa(pkgManager, [installCmd, ...deps], { stdio: "inherit" });
+
+  if (pkgManager === "npm") {
+    await execa("npm", ["install", ...deps], { stdio: "inherit" });
+  } else {
+    await execa(pkgManager, ["add", ...deps], { stdio: "inherit" });
+  }
 
   // Vite config
-  fs.writeFileSync(path.join(projectPath, "vite.config.js"), vite_config_template);
+  fs.writeFileSync(
+    path.join(projectPath, "vite.config.js"),
+    vite_config_template
+  );
 
   // Tailwind CSS entry
   fs.writeFileSync(path.join(projectPath, "src/index.css"), index_css_template);
@@ -114,7 +124,13 @@ async function createProject() {
   if (!inPlace) console.log(chalk.cyan(`cd ${projectName}`));
   console.log(
     chalk.cyan(
-      `${pkgManager === "yarn" ? "yarn dev" : pkgManager === "bun" ? "bun dev" : pkgManager + " run dev"}\n`
+      `${
+        pkgManager === "yarn"
+          ? "yarn dev"
+          : pkgManager === "bun"
+          ? "bun dev"
+          : pkgManager + " run dev"
+      }\n`
     )
   );
 

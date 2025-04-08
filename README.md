@@ -16,6 +16,9 @@ It automates all the boring setup work and gives you a beautifully styled, produ
 - Cleans up default Vite boilerplate
 - Generates responsive components with Tailwind classes
 - Minimal, developer-friendly file structure
+- Supports **npm**, **pnpm**, **yarn**, and **bun** package managers
+- Automatically **opens the browser** to `http://localhost:5173` after starting the project (optional)
+- Generates a `.gitignore` with common defaults
 
 ---
 
@@ -67,7 +70,7 @@ http://localhost:5000/
 
 ---
 
-## 🧪 What It Does
+## 🤪 What It Does
 
 1. Creates a Vite + React project with your provided name
 2. Installs and configures:
@@ -115,7 +118,7 @@ my-app/
 
 ---
 
-## 🫱🏻‍🫲🏻 Contributor:
+## 🫱🏻‍🫲🏻  Contributor:
 
 [![avatar](https://github.com/iamvkr.png?size=40)](https://github.com/iamvkr)
 
@@ -129,4 +132,4 @@ my-app/
 
 ## 🎉 Happy Hacking!
 
-Got ideas to make this starter even better? PRs welcome or drop your thoughts at [@megh_bari](https://x.com/megh_bari) 🚀
+Got ideas to make this starter even better? PRs welcome or drop your thoughts at [@megh_bari](https://x.com/megh_bari) ✨

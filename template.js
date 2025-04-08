@@ -8,7 +8,7 @@ export default defineConfig({
 })
 
 `;
-export const index_css_template = `@import "tailwindcss";`
+export const index_css_template = `@import "tailwindcss";`;
 
 export const app_component_template = (isRouter, isIcon) => {
   if (!isRouter && !isIcon) {
@@ -38,7 +38,7 @@ export const app_component_template = (isRouter, isIcon) => {
     );
 }
 
-export default App;`
+export default App;`;
   }
 
   if (isRouter && !isIcon) {
@@ -136,7 +136,7 @@ const App = () => {
     );
 }
 
-export default App;`
+export default App;`;
   }
 
   if (isRouter && isIcon) {
@@ -208,4 +208,4 @@ const App = () => {
 
 export default App`;
   }
-}
+};
