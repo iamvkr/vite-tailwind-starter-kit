@@ -90,6 +90,10 @@ function App() {
 export default App;
 ```
 
+## Contribution:
+
+[![avatar](https://github.com/iamvkr.png?size=40)](https://github.com/iamvkr)
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
