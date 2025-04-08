@@ -1,103 +1,132 @@
-# Vite Tailwind Starter Kit
+# ⚡ Vite Tailwind Starter Kit
 
-Vite Tailwind Starter Kit is a CLI tool that quickly sets up a Vite + React + Tailwind CSS project with just one command. It automates the installation of dependencies, configures Tailwind CSS, and updates the necessary files.
+**Vite Tailwind Starter Kit** is a CLI tool that instantly scaffolds a modern Vite + React + Tailwind CSS project complete with optional React Router and Lucide Icons—using just one command.
 
-## Features
+It automates all the boring setup work and gives you a beautifully styled, production-ready boilerplate so you can jump right into building.
 
-- Installs the latest version of Vite
-- Configures Tailwind CSS with PostCSS and Autoprefixer
-- Updates `tailwind.config.js` and `index.css` automatically
-- Generates a default `App.jsx` template with Tailwind styling
-- Provides a seamless development experience with minimal setup
+---
 
-## Installation
+## 🚀 Features
 
-To install the CLI globally, run:
+- Sets up **Vite** with **React**
+- Configures **Tailwind CSS v4**
+- Updates **tailwind.config.js** and **index.css** automatically
+- Optional **React Router v6+** with starter routes
+- Optional **Lucide Icons** (lightweight, customizable SVG icons)
+- Cleans up default Vite boilerplate
+- Generates responsive components with Tailwind classes
+- Minimal, developer-friendly file structure
 
-```sh
-npm i vite-tailwind-starter-kit
+---
+
+## 📦 Installation
+
+Install the CLI globally:
+
+```bash
+npm install -g vite-tailwind-starter-kit
 ```
 
-## Usage
+---
 
-Create a new Vite + Tailwind project using:
+## 🛠 Usage
 
-```sh
+Run the CLI to scaffold a new project:
+
+```bash
 vite-tailwind
 ```
 
-This will:
+Then follow the prompts:
 
-1. Create a new Vite project with the latest version.
-2. Install Tailwind CSS along with PostCSS and Autoprefixer.
-3. Configure `tailwind.config.js` with the correct content paths.
-4. Add Tailwind directives to `src/index.css`.
-5. Generate a styled `App.jsx` component.
+```
+√ Enter your project name ... vite-tailwind-v4-app
+√ Do you want to install react-router-dom? ... yes (if you want, otherwise type N)
+√ Do you want to install lucide-react icons? ... yes (if you want, otherwise type N)
+```
 
-## Commands
+After setup completes, you'll see this message:
 
-- `vite-tailwind <project-name>` – Initializes a new project with Vite and Tailwind CSS.
+```
+Tailwind CSS v4 with Vite plugin setup complete! Run the following commands to start your project:
+```
 
-## Example
+Now run:
 
-```sh
-vite-tailwind my-app
-cd my-app
+```bash
+cd vite-tailwind-v4-app
 npm install
 npm run dev
 ```
 
-## Generated Files
+💥 Boom! Your project is up and running at localhost:
 
-### `src/index.css`
-
-```css
-@import "tailwindcss
+```bash
+http://localhost:5000/
 ```
 
-### `src/App.jsx`
+---
 
-```jsx
-function App() {
-  return (
-    <>
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-6">
-        <h1 className="text-4xl font-bold mb-6">
-          🚀 Welcome to Vite + Tailwind!
-        </h1>
-        <div className="flex justify-center">
-          <p className="text-lg text-gray-300 mb-4 text-center">
-            This setup was automatically generated. <br />
-            <span className="font-bold text-amber-400">
-              Ab toh hogi na coding??
-            </span>
-          </p>
-        </div>
+## 🧪 What It Does
 
-        <a
-          href="https://x.com/megh_bari"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mb-2 inline-flex items-center gap-2 px-4 cursor-pointer py-2 rounded-md bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300 shadow-md"
-        >
-          Follow Megh Bari
-        </a>
-      </div>
-    </>
-  );
-}
+1. Creates a Vite + React project with your provided name
+2. Installs and configures:
+   - `tailwindcss v4`
+   - `react-router-dom` _(if selected)_
+   - `lucide-react` _(if selected)_
+3. Generates:
+   - `App.jsx` — with responsive layout and Tailwind utilities
+   - `App.jsx` — if routing is selected
+   - Example pages — `Home`, `About`, with navigation in `App.jsx`
+   - Integrated Lucide icons — if selected
 
-export default App;
+---
+
+## 📁 Project Structure
+
+```
+my-app/
+├── node_modules/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── assets/
+│   │   └── react.svg
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
 ```
 
-## Contribution:
+---
+
+## 🙌 Credits
+
+<a href="https://x.com/megh_bari" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+    <img src="https://github.com/megh-bari.png?size=40" alt="avatar" width="32" height="32" style="border-radius: 50%;" />
+    <span> Creator</span>
+  </a>
+
+---
+
+## Contributor:
 
 [![avatar](https://github.com/iamvkr.png?size=40)](https://github.com/iamvkr)
 
-## License
+---
 
-This project is licensed under the [MIT License](LICENSE).
+## 📜 License
 
+[MIT](./LICENSE)
 
+---
 
-## Happy Coding 🎈
+## 🎉 Happy Hacking!
+
+Got ideas to make this starter even better? PRs welcome or drop your thoughts at [@megh_bari](https://x.com/megh_bari) 🚀
