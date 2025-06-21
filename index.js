@@ -29,6 +29,12 @@ async function createProject() {
     },
     {
       type: 'confirm',
+      name: 'isTs',
+      message: 'Do you want to use typescript?',
+      initial: true,
+    },
+    {
+      type: 'confirm',
       name: 'isRouter',
       message: 'Do you want to install react-router-dom?',
       initial: true,
@@ -47,7 +53,7 @@ async function createProject() {
     },
   ]);
 
-  const { projectName, pkgManager, isRouter, isIcon, openBrowser } = response;
+  const { projectName,isTs, pkgManager, isRouter, isIcon, openBrowser } = response;
   const inPlace = projectName === '.';
 
   const appName = inPlace ? path.basename(process.cwd()) : projectName;
@@ -55,7 +61,7 @@ async function createProject() {
 
   console.log(
     chalk.green(
-      `\nCreating Vite + Tailwind${isRouter ? ' + React Router' : ''}${
+      `\nCreating Vite ${isTs ? 'with ts' : ''} + Tailwind${isRouter ? ' + React Router' : ''}${
         isIcon ? ' + Lucide Icons' : ''
       } project: ${appName}...\n`
     )
@@ -64,20 +70,17 @@ async function createProject() {
   if (!inPlace) {
     const createCmd =
       pkgManager === 'bun'
-        ? ['create', 'vite', appName, '--', '--template', 'react']
-        : ['create', 'vite@latest', appName, '--', '--template', 'react'];
+        ? ['create', 'vite', appName, '--', '--template', isTs ? 'react-ts' : 'react']
+        : ['create', 'vite@latest', appName, '--', '--template', isTs ? 'react-ts' : 'react'];
     await execa(pkgManager, createCmd, { stdio: 'inherit' });
     process.chdir(projectPath);
   } else {
     const createCmd =
       pkgManager === 'bun'
-        ? ['create', 'vite', '.', '--', '--template', 'react']
-        : ['create', 'vite@latest', '.', '--', '--template', 'react'];
+        ? ['create', 'vite', '.', '--', '--template', isTs ? 'react-ts' : 'react']
+        : ['create', 'vite@latest', '.', '--', '--template', isTs ? 'react-ts' : 'react'];
     await execa(pkgManager, createCmd, { stdio: 'inherit' });
   }
-
-  const installCmd =
-    pkgManager === 'yarn' || pkgManager === 'pnpm' || pkgManager === 'bun' ? 'add' : 'install';
 
   const deps = ['tailwindcss', '@tailwindcss/vite'];
   if (isRouter) deps.push('react-router-dom');
@@ -92,13 +95,13 @@ async function createProject() {
   }
 
   // Vite config
-  fs.writeFileSync(path.join(projectPath, 'vite.config.js'), vite_config_template);
+  fs.writeFileSync(path.join(projectPath, `vite.config.${isTs ? 'ts' : 'js'}`), vite_config_template);
 
   // Tailwind CSS entry
   fs.writeFileSync(path.join(projectPath, 'src/index.css'), index_css_template);
 
   // App.jsx
-  fs.writeFileSync(path.join(projectPath, 'src/App.jsx'), app_component_template(isRouter, isIcon));
+  fs.writeFileSync(path.join(projectPath, `src/App.${isTs ? 'tsx' : 'jsx'}`), app_component_template(isRouter, isIcon, isTs));
 
   // .gitignore
   fs.writeFileSync(path.join(projectPath, '.gitignore'), `node_modules\ndist\n.env\n.DS_Store`);
